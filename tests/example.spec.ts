@@ -1,8 +1,11 @@
-import { test, expect } from '@playwright/test';
+import { test} from '@playwright/test';
 import { initializePages,homePage } from '../pages';
 
 
+test.beforeEach(async ({ page }) => {
+      initializePages(page)
+});
+
 test('Open web site', async ({page}) => {
-    initializePages(page);
-await homePage.openBaseWebSite()
+   await homePage.openBaseWebSite()
 })
