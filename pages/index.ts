@@ -1,14 +1,14 @@
 import { Page } from '@playwright/test'
 import BasePage from './BasePage'
-import HomePage from './HomePage'
+import InventoryPage from './InventoryPage'
 import LoginPage from './LoginPage'
 
 let loginPage: LoginPage
-let homePage: HomePage
+let inventoryPage: InventoryPage
 
 export const initializePages = (page: Page) => {
   loginPage = new LoginPage(page)
-  homePage = new HomePage(page)
+  inventoryPage = new InventoryPage(page)
 }
 
-export { BasePage, loginPage, homePage }
+export { BasePage, loginPage, inventoryPage }

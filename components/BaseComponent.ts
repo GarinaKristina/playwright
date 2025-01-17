@@ -10,10 +10,6 @@ export default abstract class BaseComponent {
     this.locator = page.locator(selector)
   }
 
-  public getElement(page: Page, locator: string): Locator {
-    return page.locator(locator)
-  }
-
   public async click(): Promise<void> {
     await this.locator.click()
   }
