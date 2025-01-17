@@ -1,7 +1,7 @@
 import { Locator, Page } from '@playwright/test'
 
 export default abstract class BaseComponent {
-  private locator: Locator
+  public locator: Locator
 
   protected constructor(
     private page: Page,

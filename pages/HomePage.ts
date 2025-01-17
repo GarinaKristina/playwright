@@ -1,18 +1,12 @@
-import { Page } from '@playwright/test'
-import BasePage from './BasePage'
-import { Button } from '../components'
+import { expect, Page } from '@playwright/test'
+import BasePage from './BasePage.ts'
 
 export default class HomePage extends BasePage {
-  private logIn = new Button(this.page, '#login-button')
   constructor(page: Page) {
     super(page)
   }
 
-  public async openBaseWebSite() {
-    await this.openPage('https://www.saucedemo.com/')
-  }
-
-  public async login() {
-    await this.logIn.click()
+  public async validateCurrentUrl(url: string | RegExp): Promise<void> {
+    await expect(this.page).toHaveURL(url)
   }
 }

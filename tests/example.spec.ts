@@ -1,12 +1,12 @@
 import { test } from '@playwright/test'
-import { initializePages, homePage } from '../pages'
+import { homePage, initializePages, loginPage } from '../pages'
 
-// test.beforeEach(async ({ page }) => {
-
-// })
-
-test('Open web site', async ({ page }) => {
+test.beforeEach(async ({ page }) => {
   initializePages(page)
-  await homePage.openBaseWebSite()
-  await homePage.login()
+})
+
+test('Verify login to website', async () => {
+  await loginPage.openBaseWebSite()
+  await loginPage.login()
+  await homePage.validateCurrentUrl(/inventory/)
 })

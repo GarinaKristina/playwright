@@ -1,12 +1,14 @@
+import { Page } from '@playwright/test'
+import BasePage from './BasePage'
+import HomePage from './HomePage'
+import LoginPage from './LoginPage'
 
-import { Page } from '@playwright/test';
-import BasePage from './BasePage';
-import HomePage from './HomePage';
-
+let loginPage: LoginPage
 let homePage: HomePage
 
 export const initializePages = (page: Page) => {
-  homePage = new HomePage(page);
-};
+  loginPage = new LoginPage(page)
+  homePage = new HomePage(page)
+}
 
-export { BasePage, homePage };
+export { BasePage, loginPage, homePage }
