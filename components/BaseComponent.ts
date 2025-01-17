@@ -1,62 +1,20 @@
 import { Locator, Page } from '@playwright/test'
 
-interface GetElementOptions {
-  method?:
-    | 'getByRole'
-    | 'getByLabel'
-    | 'getByPlaceholder'
-    | 'getByText'
-    | 'getByTestId'
-    | 'byLocator'
-  selector: string
-  methodOptions?: tGetRoleOptions | string
-}
-
-interface tGetRoleOptions {
-  checked?: boolean
-  disabled?: boolean
-  exact?: boolean
-  expanded?: boolean
-  includeHidden?: boolean
-  level?: number
-  name?: string
-  pressed?: boolean
-  selected?: boolean
-}
-
-interface Matcher {
-  getByLabel: (selector: string) => Locator
-  getByPlaceholder: (selector: string) => Locator
-  getByText: (selector: string) => Locator
-  getByTestId: (selector: string) => Locator
-  byLocator: (selector: string) => Locator
-}
-
 export default abstract class BaseComponent {
-  private locator: string
+  private locator: Locator
 
-  protected constructor(locator: string) {
-    this.locator = locator
+  protected constructor(
+    private page: Page,
+    private selector: string
+  ) {
+    this.locator = page.locator(selector)
   }
 
-  public getElement(page: Page, options?: GetElementOptions): Locator {
-    const matcher: Matcher = {
-      getByLabel: (selector: string) => page.getByLabel(selector),
-      getByPlaceholder: (selector: string) => page.getByPlaceholder(selector),
-      getByText: (selector: string) => page.getByText(selector),
-      getByTestId: (selector: string) => page.getByTestId(selector),
-      byLocator: (selector: string) => page.locator(selector),
-    }
-
-    // const method = options?.method || 'byLocator'
-    const selector = options?.selector
-    const methodOptions = options?.methodOptions
-
-    const baseElement = matcher[method](selector, methodOptions)
-    return baseElement
+  public getElement(page: Page, locator: string): Locator {
+    return page.locator(locator)
   }
 
-  public async click(page: Page, options?: GetElementOptions): Promise<void> {
-    await this.getElement(page, options).click()
+  public async click(): Promise<void> {
+    await this.locator.click()
   }
 }
