@@ -15,7 +15,7 @@ export default class LoginPage extends BasePage {
   }
 
   public async openBaseWebSite() {
-    await this.openPage(this.baseURL)
+    await super.openPage(this.baseURL)
   }
 
   public async login() {

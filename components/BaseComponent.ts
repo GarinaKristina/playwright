@@ -1,5 +1,4 @@
-import { Locator, Page } from '@playwright/test'
-
+import { Locator, Page, expect } from '@playwright/test'
 export default abstract class BaseComponent {
   public locator: Locator
 
@@ -12,5 +11,9 @@ export default abstract class BaseComponent {
 
   public async click(): Promise<void> {
     await this.locator.click()
+  }
+
+  public async toHaveValue(expectedText: string) {
+    await expect(this.locator).toHaveText(expectedText)
   }
 }

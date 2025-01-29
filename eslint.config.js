@@ -5,9 +5,6 @@ import eslintPluginImportX from 'eslint-plugin-import-x'
 import tseslint, { configs, parser } from 'typescript-eslint'
 
 export default tseslint.config(
-  {
-    ignores: ['app/', '.artifacts/', '*.cjs'],
-  },
   eslint.configs.recommended,
   eslintPluginImportX.flatConfigs.recommended,
   eslintPluginImportX.flatConfigs.typescript,
@@ -22,10 +19,10 @@ export default tseslint.config(
       },
     },
     rules: {
+      'max-len': ['error', { code: 150 }],
       '@typescript-eslint/no-unused-expressions': 'off',
       '@typescript-eslint/no-unsafe-assignment': 'off',
       '@typescript-eslint/restrict-template-expressions': 'off',
-      //Better to remove when all API would be typed
       '@typescript-eslint/no-unsafe-member-access': 'off',
       '@typescript-eslint/no-unsafe-return': 'off',
       '@typescript-eslint/no-unsafe-argument': 'off',
@@ -59,6 +56,5 @@ export default tseslint.config(
         },
       ],
     },
-  },
-  prettier
+  }
 )
