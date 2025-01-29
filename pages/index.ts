@@ -1,7 +1,7 @@
 import { Page } from '@playwright/test'
-import BasePage from './BasePage'
-import InventoryPage from './InventoryPage'
-import LoginPage from './LoginPage'
+import InventoryPage from './InventoryPage.ts'
+import LoginPage from './LoginPage.ts'
+import BasePage from './BasePage.ts'
 
 let loginPage: LoginPage
 let inventoryPage: InventoryPage

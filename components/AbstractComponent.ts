@@ -1,12 +1,8 @@
 import { Page } from '@playwright/test'
 import { BaseComponent } from './index.ts'
 
-export class Input extends BaseComponent {
+export class AbstractComponent extends BaseComponent {
   constructor(page: Page, selector: string) {
     super(page, selector)
-  }
-
-  public async fill(value: string | number): Promise<void> {
-    await this.locator.fill(value.toString())
   }
 }

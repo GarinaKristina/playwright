@@ -7,11 +7,6 @@
     "rootDir": ".",
     "moduleResolution": "NodeNext",
     "baseUrl": ".",
-    // "paths": {
-    //   "@components/*": ["components/*"],
-    //   "@pages/*": ["pages/*"],
-    //   "@types/*": ["types/*"]
-    // },
     "types": ["node", "@playwright/test"],
     "resolvePackageJsonExports": true,
     "resolvePackageJsonImports": true,
