@@ -6,22 +6,14 @@ test.beforeEach(async ({ page }) => {
 })
 
 test('Verify items added to cart', async () => {
-  const items: tAddToCartItems[] = [
-    'Sauce Labs Backpack',
-    'Sauce Labs Bike Light',
-    'Sauce Labs Bolt T-Shirt',
-    'Sauce Labs Fleece Jacket',
-    'Sauce Labs Onesie',
-    'Test.allTheThings() T-Shirt (Red)',
-  ]
-
   await loginPage.openBaseWebSite()
   await loginPage.login()
   await inventoryPage.validateCurrentUrl(/inventory/)
-
-  for (const item of items) {
-    await inventoryPage.addItemToCart(item)
-  }
-
+  await inventoryPage.addItemToCart('Sauce Labs Backpack')
+  await inventoryPage.addItemToCart('Sauce Labs Bike Light')
+  await inventoryPage.addItemToCart('Sauce Labs Bolt T-Shirt')
+  await inventoryPage.addItemToCart('Sauce Labs Fleece Jacket')
+  await inventoryPage.addItemToCart('Sauce Labs Onesie')
+  await inventoryPage.addItemToCart('Test.allTheThings() T-Shirt (Red)')
   await inventoryPage.assertCartHaveItem('6')
 })

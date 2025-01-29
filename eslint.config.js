@@ -5,6 +5,9 @@ import eslintPluginImportX from 'eslint-plugin-import-x'
 import tseslint, { configs, parser } from 'typescript-eslint'
 
 export default tseslint.config(
+  {
+    ignores: ['test-results', 'playwright-report'],
+  },
   eslint.configs.recommended,
   eslintPluginImportX.flatConfigs.recommended,
   eslintPluginImportX.flatConfigs.typescript,
@@ -56,5 +59,6 @@ export default tseslint.config(
         },
       ],
     },
-  }
+  },
+  prettier
 )

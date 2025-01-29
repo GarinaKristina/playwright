@@ -1,14 +1,6 @@
 import { Page } from '@playwright/test'
-import { Button } from '../components/index.ts'
 import BasePage from './BasePage.ts'
-
-type tAddToCartItems =
-  | 'Sauce Labs Backpack'
-  | 'Sauce Labs Bike Light'
-  | 'Sauce Labs Bolt T-Shirt'
-  | 'Sauce Labs Fleece Jacket'
-  | 'Sauce Labs Onesie'
-  | 'Test.allTheThings() T-Shirt (Red)'
+import { Button } from 'components/index.ts'
 
 export default class InventoryPage extends BasePage {
   private sauceLabsBackpack = new Button(this.page, '#add-to-cart-sauce-labs-backpack')

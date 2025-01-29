@@ -2,15 +2,20 @@
   "name": "playwright",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "npx playwright test --headed  --project chromium"
+    "test": "npx playwright test --headed  --project chromium",
+    "eslint": "eslint .",
+    "prettier": "prettier . --write",
+    "check-types": "tsc --noEmit"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@playwright/test": "^1.49.0",
+    "@types/eslint-config-prettier": "^6.11.3",
     "@types/node": "^22.10.1",
     "eslint": "^9.18.0",
     "eslint-config-prettier": "^9.1.0",

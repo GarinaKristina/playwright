@@ -1,7 +1,7 @@
 import { Page } from '@playwright/test'
 import defineConfig from '../playwright.config.ts'
-import { Button, Input } from '../components/index.ts'
 import BasePage from './BasePage.ts'
+import { Button, Input } from '../components/index.ts'
 
 export default class LoginPage extends BasePage {
   private logIn = new Button(this.page, '#login-button')
