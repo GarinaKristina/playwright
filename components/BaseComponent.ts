@@ -14,10 +14,17 @@ export default abstract class BaseComponent {
     await this.locator.click()
   }
 
-  public async toHaveText(expectedText: string): Promise<void> {
+  public async haveText(expectedText: string): Promise<void> {
     await expect(this.locator).toHaveText(expectedText)
   }
 
+  public async haveValue(expectedText: string): Promise<void> {
+    await expect(this.locator).toHaveValue(expectedText)
+  }
+
+  public async containText(expectedText: string): Promise<void> {
+    await expect(this.locator).toContainText(expectedText)
+  }
   public async elementDisplayed(): Promise<void> {
     await expect(this.locator).toBeEnabled()
   }

@@ -10,6 +10,7 @@ export default class InventoryPage extends BasePage {
   private sauceLabsOnesie = new Button(this.page, '#add-to-cart-sauce-labs-onesie')
   private testAllTheThingsTShirtRed = new Button(this.page, 'button[id="add-to-cart-test.allthethings()-t-shirt-(red)"]')
   private cart = new Button(this.page, '#shopping_cart_container')
+  private filters = new Button(this.page, '.product_sort_container')
 
   private inventoryItemCardPrice: (item: string) => AbstractComponent
 
@@ -29,6 +30,10 @@ export default class InventoryPage extends BasePage {
       )
   }
 
+  public async openFilters() {
+    await this.filters.click()
+  }
+
   public async addItemToCart(itemName: tInventoryItems) {
     const cartItemMap: { [itemName: string]: Button } = {
       'Sauce Labs Backpack': this.sauceLabsBackpack,
@@ -43,18 +48,23 @@ export default class InventoryPage extends BasePage {
     await element.click()
   }
 
-  public async assertCartHaveItem(itemCount: string) {
-    await this.cart.toHaveText(itemCount)
-  }
-
-  public async assertItemHasPrice(itemName: tInventoryItems, price: string) {
-    await this.inventoryItemCardPrice(itemName).toHaveText(price)
-  }
-  public async assertItemHasDescription(itemName: tInventoryItems, description: string) {
-    await this.inventoryItemCardDescription(itemName).toHaveText(description)
+  public async verifyFilters(filterName: tFilters) {
+    await this.filters.containText(filterName)
   }
 
   public async verifyItemOnPage(itemName: tInventoryItems) {
     await this.inventoryItemCardPrice(itemName).elementDisplayed()
+  }
+
+  public async assertCartHaveItem(itemCount: string) {
+    await this.cart.haveText(itemCount)
+  }
+
+  public async assertItemHasPrice(itemName: tInventoryItems, price: string) {
+    await this.inventoryItemCardPrice(itemName).haveText(price)
+  }
+
+  public async assertItemHasDescription(itemName: tInventoryItems, description: string) {
+    await this.inventoryItemCardDescription(itemName).haveText(description)
   }
 }
