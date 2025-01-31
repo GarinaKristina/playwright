@@ -19,6 +19,6 @@ export default abstract class BaseComponent {
   }
 
   public async elementDisplayed(): Promise<void> {
-    await expect(this.locator).toBeDisabled()
+    await expect(this.locator).toBeEnabled()
   }
 }

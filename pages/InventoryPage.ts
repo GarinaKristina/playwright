@@ -10,13 +10,26 @@ export default class InventoryPage extends BasePage {
   private sauceLabsOnesie = new Button(this.page, '#add-to-cart-sauce-labs-onesie')
   private testAllTheThingsTShirtRed = new Button(this.page, 'button[id="add-to-cart-test.allthethings()-t-shirt-(red)"]')
   private cart = new Button(this.page, '#shopping_cart_container')
-  private inventoryContainer = new AbstractComponent(this.page, '#inventory_container')
 
+  private inventoryItemCardPrice: (item: string) => AbstractComponent
+
+  private inventoryItemCardDescription: (item: string) => AbstractComponent
   constructor(page: Page) {
     super(page)
+
+    this.inventoryItemCardPrice = item =>
+      new AbstractComponent(
+        this.page,
+        `//div[contains(text(),  "${item}")]/ancestor::div[@class="inventory_item"]//div[@class="inventory_item_price"]`
+      )
+    this.inventoryItemCardDescription = item =>
+      new AbstractComponent(
+        this.page,
+        `//div[contains(text(),  "${item}")]/ancestor::div[@class="inventory_item"]//div[@class="inventory_item_desc"]`
+      )
   }
 
-  public async addItemToCart(itemName: tAddToCartItems) {
+  public async addItemToCart(itemName: tInventoryItems) {
     const cartItemMap: { [itemName: string]: Button } = {
       'Sauce Labs Backpack': this.sauceLabsBackpack,
       'Sauce Labs Bike Light': this.sauceLabsBikeLight,
@@ -34,7 +47,14 @@ export default class InventoryPage extends BasePage {
     await this.cart.toHaveText(itemCount)
   }
 
-  public async verifyItemOnPage(itemName: tAddToCartItems) {
-    await this.inventoryContainer.toHaveText(itemName)
+  public async assertItemHasPrice(itemName: tInventoryItems, price: string) {
+    await this.inventoryItemCardPrice(itemName).toHaveText(price)
+  }
+  public async assertItemHasDescription(itemName: tInventoryItems, description: string) {
+    await this.inventoryItemCardDescription(itemName).toHaveText(description)
+  }
+
+  public async verifyItemOnPage(itemName: tInventoryItems) {
+    await this.inventoryItemCardPrice(itemName).elementDisplayed()
   }
 }
