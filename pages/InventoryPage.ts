@@ -1,6 +1,7 @@
-import { Page } from '@playwright/test'
+import { expect, Page } from '@playwright/test'
 import BasePage from './BasePage.ts'
 import { AbstractComponent, Button } from 'components/index.ts'
+import { azFilterOrder, zaFilterOrder } from 'constants/filterOrder.ts'
 
 export default class InventoryPage extends BasePage {
   private sauceLabsBackpack = new Button(this.page, '#add-to-cart-sauce-labs-backpack')
@@ -11,10 +12,12 @@ export default class InventoryPage extends BasePage {
   private testAllTheThingsTShirtRed = new Button(this.page, 'button[id="add-to-cart-test.allthethings()-t-shirt-(red)"]')
   private cart = new Button(this.page, '#shopping_cart_container')
   private filters = new Button(this.page, '.product_sort_container')
+  private container = new AbstractComponent(this.page, '.inventory_item')
 
   private inventoryItemCardPrice: (item: string) => AbstractComponent
-
   private inventoryItemCardDescription: (item: string) => AbstractComponent
+  private filter: (filterName: string) => AbstractComponent
+
   constructor(page: Page) {
     super(page)
 
@@ -28,10 +31,25 @@ export default class InventoryPage extends BasePage {
         this.page,
         `//div[contains(text(),  "${item}")]/ancestor::div[@class="inventory_item"]//div[@class="inventory_item_desc"]`
       )
+    this.filter = filterName => new AbstractComponent(this.page, `.${filterName}`)
   }
 
   public async openFilters() {
     await this.filters.click()
+  }
+
+  public async verifyFilteredItems() {
+    await this.openFilters()
+    // await this.filter('Name (Z to A)').click()
+
+    const items = await this.container.all()
+    const itemNames = await Promise.all(
+      items.map(async item => {
+        return (await item.locator('.inventory_item_name').innerText()).trim()
+      })
+    )
+    console.log(itemNames)
+    expect(itemNames).toEqual(zaFilterOrder)
   }
 
   public async addItemToCart(itemName: tInventoryItems) {
