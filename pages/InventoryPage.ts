@@ -13,6 +13,7 @@ export default class InventoryPage extends BasePage {
   private cart = new Button(this.page, '#shopping_cart_container')
   private filters = new Button(this.page, '.product_sort_container')
   private container = new AbstractComponent(this.page, '.inventory_item')
+  private burgerMenu = new Button(this.page, '#react-burger-menu-btn')
 
   private inventoryItemCardPrice: (item: string) => AbstractComponent
   private inventoryItemCardDescription: (item: string) => AbstractComponent
@@ -36,18 +37,12 @@ export default class InventoryPage extends BasePage {
     await this.filters.click()
   }
 
-  public async verifyFilteredItems(filterName: tFilters) {
-    await this.openFilters()
-    await this.filters.selectOption(filterName)
+  public async openBurgerMenu() {
+    await this.burgerMenu.click()
+  }
 
-    const itemNames = await this.getItemNames()
-    const filterActions: Record<tFilters, () => string[]> = {
-      'Name (A to Z)': () => azFilterOrder,
-      'Name (Z to A)': () => zaFilterOrder,
-      'Price (low to high)': () => lowToHighFilterOrder,
-      'Price (high to low)': () => highToLowFilterOrder,
-    }
-    expect(itemNames).toEqual(filterActions[filterName]())
+  public async openCart() {
+    await this.cart.click()
   }
 
   public async addItemToCart(itemName: tInventoryItems) {
@@ -62,6 +57,20 @@ export default class InventoryPage extends BasePage {
 
     const element = cartItemMap[itemName]
     await element.click()
+  }
+
+  public async verifyFilteredItems(filterName: tFilters) {
+    await this.openFilters()
+    await this.filters.selectOption(filterName)
+
+    const itemNames = await this.getItemNames()
+    const filterActions: Record<tFilters, () => string[]> = {
+      'Name (A to Z)': () => azFilterOrder,
+      'Name (Z to A)': () => zaFilterOrder,
+      'Price (low to high)': () => lowToHighFilterOrder,
+      'Price (high to low)': () => highToLowFilterOrder,
+    }
+    expect(itemNames).toEqual(filterActions[filterName]())
   }
 
   public async verifyFilters(filterName: tFilters) {
