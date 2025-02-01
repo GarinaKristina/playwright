@@ -1,6 +1,6 @@
 import { test } from '@playwright/test'
 import { INVENTORY } from 'constants/items.ts'
-import { cartPage, initializePages, inventoryPage, loginPage } from 'pages/index.ts'
+import { cartPage, checkoutPage, initializePages, inventoryPage, loginPage } from 'pages/index.ts'
 
 test.describe('Cart/ Basket', () => {
   const inventoryKeys = Object.keys(INVENTORY) as tInventoryItems[]
@@ -28,7 +28,14 @@ test.describe('Cart/ Basket', () => {
     await cartPage.clickContinueShopping()
     await inventoryPage.validateCurrentUrl(/inventory/)
     await inventoryPage.openCart()
+    await inventoryPage.assertCartHaveItem('6')
     await cartPage.goToCheckout()
     await inventoryPage.validateCurrentUrl(/checkout-step-one/)
+
+    await checkoutPage.fillClientData()
+    await checkoutPage.clickContinue()
+    await checkoutPage.verifyPrice('totalPrice', '$140.34')
+    await checkoutPage.verifyPrice('itemTotalPrice', '$129.94')
+    await checkoutPage.verifyPrice('tax', '$10.40')
   })
 })
