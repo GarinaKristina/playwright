@@ -27,6 +27,7 @@ test.describe('Cart/ Basket', () => {
 
     await cartPage.clickContinueShopping()
     await inventoryPage.validateCurrentUrl(/inventory/)
+
     await inventoryPage.openCart()
     await inventoryPage.assertCartHaveItem('6')
     await cartPage.goToCheckout()
@@ -37,5 +38,12 @@ test.describe('Cart/ Basket', () => {
     await checkoutPage.verifyPrice('totalPrice', '$140.34')
     await checkoutPage.verifyPrice('itemTotalPrice', '$129.94')
     await checkoutPage.verifyPrice('tax', '$10.40')
+    await checkoutPage.clickFinish()
+    await checkoutPage.validateCurrentUrl(/checkout-complete/)
+
+    await checkoutPage.verifyCompleteHeader()
+    await checkoutPage.verifyCompleteText()
+    await checkoutPage.goToInventoryPage()
+    await inventoryPage.validateCurrentUrl(/inventory/)
   })
 })

@@ -16,6 +16,11 @@ export default class CartPage extends BasePage {
   private tax = new AbstractComponent(this.page, '.summary_tax_label')
   private finish = new Button(this.page, '#finish')
 
+  //Complete
+  private completeHeder = new AbstractComponent(this.page, '.complete-header')
+  private completeText = new AbstractComponent(this.page, '.complete-text')
+  private backHome = new Button(this.page, '#back-to-products')
+
   constructor(page: Page) {
     super(page)
   }
@@ -41,5 +46,17 @@ export default class CartPage extends BasePage {
       tax: this.tax,
     }
     await priceMap[priceType].containText(price)
+  }
+
+  public async verifyCompleteHeader() {
+    await this.completeHeder.containText('Thank you for your order!')
+  }
+
+  public async verifyCompleteText() {
+    await this.completeText.containText('Your order has been dispatched, and will arrive just as fast as the pony can get there!')
+  }
+
+  public async goToInventoryPage() {
+    await this.backHome.click()
   }
 }
