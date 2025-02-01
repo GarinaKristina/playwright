@@ -49,8 +49,23 @@ export default abstract class BaseComponent {
     return await this.locator.allTextContents()
   }
 
-  public async all() {
+  /**
+   * Retrieves all elements matching the locator.
+   *
+   * @returns {Promise<any[]>} A promise that resolves to an array of elements.
+   */
+  public async all(): Promise<any[]> {
     return await this.locator.all()
+  }
+
+  /**
+   * Selects an option from a dropdown or select element.
+   *
+   * @param option - The value of the option to be selected.
+   * @returns A promise that resolves when the option has been selected.
+   */
+  public async selectOption(option: string): Promise<void> {
+    await this.page.selectOption(this.selector, option)
   }
 
   /**
