@@ -3,5 +3,6 @@ import { AbstractComponent } from './AbstractComponent.ts'
 import { Button } from './Button.ts'
 import { Input } from './Input.ts'
 import { Footer } from './Footer.ts'
+import { Dropdown } from './Dropdown.ts'
 
-export { BaseComponent, Button, Input, AbstractComponent, Footer }
+export { BaseComponent, Button, Input, AbstractComponent, Footer, Dropdown }

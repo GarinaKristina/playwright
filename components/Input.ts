@@ -7,6 +7,7 @@ export class Input extends BaseComponent {
   }
 
   public async fill(value: string | number): Promise<void> {
+    await this.locator.isEnabled()
     await this.locator.fill(value.toString())
   }
 }
