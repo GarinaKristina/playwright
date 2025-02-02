@@ -78,7 +78,7 @@ export default class InventoryPage extends BasePage {
   }
 
   public async verifyItemOnPage(itemName: tInventoryItems) {
-    await this.inventoryItemCardPrice(itemName).elementDisplayed()
+    await this.inventoryItemCardPrice(itemName).isElementVisible()
   }
 
   public async assertCartHaveItem(itemCount: string) {

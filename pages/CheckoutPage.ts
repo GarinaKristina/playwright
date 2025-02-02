@@ -10,7 +10,6 @@ export default class CartPage extends BasePage {
   private lastName = new Input(this.page, '#last-name')
   private postalCode = new Input(this.page, '#postal-code')
   private continue = new Button(this.page, '#continue')
-  // private cancel = new Button(this.page, '#cancel')
   private itemTotalPrice = new AbstractComponent(this.page, '.summary_subtotal_label')
   private totalPrice = new AbstractComponent(this.page, '.summary_total_label')
   private tax = new AbstractComponent(this.page, '.summary_tax_label')

@@ -4,7 +4,7 @@ export default abstract class BaseComponent {
   public locator: Locator
 
   protected constructor(
-    private page: Page,
+    public page: Page,
     private selector: string
   ) {
     this.locator = page.locator(selector)
@@ -69,11 +69,11 @@ export default abstract class BaseComponent {
   }
 
   /**
-   * Checks if the element located by `this.locator` is enabled and displayed.
+   * Checks if the element located by `this.locator` is enabled.
    *
    * @returns {Promise<void>} A promise that resolves when the check is complete.
    */
-  public async elementDisplayed(): Promise<void> {
+  public async isElementVisible(): Promise<void> {
     await expect(this.locator).toBeEnabled()
   }
 }
