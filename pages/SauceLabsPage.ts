@@ -5,9 +5,25 @@ import { AbstractComponent, Button } from 'components/index.ts'
 
 export class SauceLabsPage extends BasePage {
   public footer = new Footer(this.page, 'footer-selector')
+  private securityCertifications = new Button(this.page, '//h2[normalize-space()="Security & Certifications"]')
 
+  private securityMenuBlock: (menuBlock: string) => AbstractComponent
   constructor(page: Page) {
     super(page)
+    this.securityMenuBlock = menuBlock => new AbstractComponent(this.page, `//*[contains(text(), '${menuBlock}')]`)
+  }
+
+  public async verifySecurityCertifications(): Promise<void> {
+    await this.securityCertifications.isElementVisible()
+  }
+
+  public async verifyMenuSecurityBlockVisible(menuBlock: string): Promise<void> {
+    try {
+      await this.securityMenuBlock(menuBlock).isElementVisible()
+    } catch (e) {
+      await this.wheelMouse()
+      await this.verifyMenuSecurityBlockVisible(menuBlock)
+    }
   }
 }
 
