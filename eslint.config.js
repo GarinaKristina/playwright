@@ -1,44 +1,34 @@
-import prettier from 'eslint-config-prettier'
-import eslintPluginImportX from 'eslint-plugin-import-x'
-import tseslint, { parser } from 'typescript-eslint'
+import typescript from '@typescript-eslint/eslint-plugin'
+import playwright from 'eslint-plugin-playwright'
+import typescriptParser from '@typescript-eslint/parser'
+import importPlugin from 'eslint-plugin-import'
 
-export default tseslint.config(
-  {
-    ignores: ['test-results', 'playwright-report'],
-  },
-  eslintPluginImportX.flatConfigs.recommended,
-  eslintPluginImportX.flatConfigs.typescript,
+const { configs: typescriptConfigs } = typescript
 
+export default [
   {
+    files: ['**/*.ts', '**/*.tsx'],
+    plugins: {
+      '@typescript-eslint': typescript,
+      playwright,
+      import: importPlugin,
+    },
     languageOptions: {
-      parser: parser,
-      ecmaVersion: 'latest',
-      sourceType: 'module',
+      parser: typescriptParser,
       parserOptions: {
-        project: './tsconfig.json',
+        ecmaVersion: 'latest',
+        sourceType: 'module',
       },
     },
     rules: {
-      'max-len': ['error', { code: 150 }],
-      '@typescript-eslint/no-unused-expressions': 'off',
-      '@typescript-eslint/no-unsafe-assignment': 'off',
-      '@typescript-eslint/restrict-template-expressions': 'off',
-      '@typescript-eslint/no-unsafe-member-access': 'off',
-      '@typescript-eslint/no-unsafe-return': 'off',
-      '@typescript-eslint/no-unsafe-argument': 'off',
-
-      'import-x/order': [
+      ...typescriptConfigs.recommended.rules,
+      ...playwright.configs.recommended.rules,
+      'playwright/expect-expect': 'off',
+      'no-console': 'warn',
+      'import/order': [
         'error',
         {
-          groups: [['builtin', 'external'], 'internal', ['parent', 'sibling', 'index']],
-          pathGroups: [
-            {
-              group: 'internal',
-              position: 'before',
-              pattern: '**/internal/**',
-            },
-          ],
-          pathGroupsExcludedImportTypes: ['builtin'],
+          groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
           'newlines-between': 'always',
           alphabetize: {
             order: 'asc',
@@ -48,5 +38,4 @@ export default tseslint.config(
       ],
     },
   },
-  prettier
-)
+]

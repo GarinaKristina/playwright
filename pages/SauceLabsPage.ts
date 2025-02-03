@@ -22,7 +22,7 @@ export class SauceLabsPage extends BasePage {
     try {
       await this.securityMenuBlock(menuBlock).isElementVisible()
     } catch (e) {
-      Logger.error(`SauceLabsPage.verifyMenuSecurityBlockVisible] Menu block [${menuBlock}] not visible, scrolling down`)
+      Logger.error(`SauceLabsPage.verifyMenuSecurityBlockVisible] Menu block [${menuBlock}] not visible, scrolling down. Error: ${e}`)
       await this.wheelMouse()
       await this.verifyMenuSecurityBlockVisible(menuBlock)
     }

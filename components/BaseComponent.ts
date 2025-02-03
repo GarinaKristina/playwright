@@ -76,4 +76,8 @@ export default abstract class BaseComponent {
   public async isElementVisible(): Promise<void> {
     await expect(this.locator).toBeEnabled()
   }
+
+  public async getLocatorByRole(role: any, name: string): Promise<Locator> {
+    return this.page.getByRole(role, { name })
+  }
 }

@@ -23,7 +23,7 @@ export default class BurgerMenuPage extends BasePage {
       }
       await menuItemMap[menuItem].click()
       Logger.info(`BurgerMenuPage.open] Burger menu [${menuItem}] opened`)
-    } catch (e) {
+    } catch {
       Logger.error(`BurgerMenuPage.open] Burger menu [${menuItem}] not opened`)
     }
   }

@@ -2,7 +2,7 @@ import { test } from '@playwright/test'
 import { getLoginPage } from 'helpers/getLoginPage.ts'
 import { burgerMenuPage, contactUsPage, initializePages, inventoryPage, sauceLabsPage } from 'pages/index.ts'
 
-test.describe('Security', () => {
+test.describe('Contact Us', () => {
   const contextTexts = [
     'How can we help?',
     "Have a question? Want more information on our products? Let us know and we'll be in touch soon!",
@@ -22,7 +22,7 @@ test.describe('Security', () => {
     await inventoryPage.validateCurrentUrl(/inventory/)
   })
 
-  test('Verify security page contain needed blocks', async () => {
+  test('Verify contact us detail form', async () => {
     await inventoryPage.openBurgerMenu()
     await burgerMenuPage.open('About')
     await sauceLabsPage.footer.selectFooterMenu('contactUs')

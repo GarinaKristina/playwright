@@ -14,7 +14,6 @@ export default defineConfig({
   use: {
     baseURL: 'https://www.saucedemo.com/',
     trace: 'on-first-retry',
-    // outputDir: 'my-reports/test-results',
   },
 
   projects: [
