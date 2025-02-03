@@ -2,6 +2,7 @@ import { Page } from '@playwright/test'
 import BasePage from './BasePage.ts'
 import { Footer } from 'components/Footer.ts'
 import { AbstractComponent, Button } from 'components/index.ts'
+import Logger from 'helpers/Logger.ts'
 
 export class SauceLabsPage extends BasePage {
   public footer = new Footer(this.page, 'footer-selector')
@@ -10,7 +11,7 @@ export class SauceLabsPage extends BasePage {
   private securityMenuBlock: (menuBlock: string) => AbstractComponent
   constructor(page: Page) {
     super(page)
-    this.securityMenuBlock = menuBlock => new AbstractComponent(this.page, `//*[contains(text(), '${menuBlock}')]`)
+    this.securityMenuBlock = menuBlock => new Footer(this.page, `//*[contains(text(), '${menuBlock}')]`)
   }
 
   public async verifySecurityCertifications(): Promise<void> {
@@ -21,6 +22,7 @@ export class SauceLabsPage extends BasePage {
     try {
       await this.securityMenuBlock(menuBlock).isElementVisible()
     } catch (e) {
+      Logger.error(`SauceLabsPage.verifyMenuSecurityBlockVisible] Menu block [${menuBlock}] not visible, scrolling down`)
       await this.wheelMouse()
       await this.verifyMenuSecurityBlockVisible(menuBlock)
     }

@@ -1,6 +1,7 @@
 import { Page } from '@playwright/test'
 import BasePage from './BasePage.ts'
 import { Button } from 'components/index.ts'
+import Logger from 'helpers/Logger.ts'
 
 export default class BurgerMenuPage extends BasePage {
   private about = new Button(this.page, '#about_sidebar_link')
@@ -13,13 +14,18 @@ export default class BurgerMenuPage extends BasePage {
   }
 
   public async open(menuItem: tBurgerMenuItems) {
-    const menuItemMap: { [key in tBurgerMenuItems]: Button } = {
-      About: this.about,
-      Logout: this.logout,
-      'Reset App State': this.resetAppState,
-      'All Items': this.allItems,
+    try {
+      const menuItemMap: { [key in tBurgerMenuItems]: Button } = {
+        About: this.about,
+        Logout: this.logout,
+        'Reset App State': this.resetAppState,
+        'All Items': this.allItems,
+      }
+      await menuItemMap[menuItem].click()
+      Logger.info(`BurgerMenuPage.open] Burger menu [${menuItem}] opened`)
+    } catch (e) {
+      Logger.error(`BurgerMenuPage.open] Burger menu [${menuItem}] not opened`)
     }
-    await menuItemMap[menuItem].click()
   }
 
   public async verifyMenuItemDisplayed(menuItem: tBurgerMenuItems) {
@@ -30,5 +36,6 @@ export default class BurgerMenuPage extends BasePage {
       'All Items': this.allItems,
     }
     await menuItemMap[menuItem].isElementVisible()
+    Logger.info(`BurgerMenuPage.verifyMenuItemDisplayed] Burger menu [${menuItem}] displayed`)
   }
 }

@@ -1,4 +1,5 @@
 import { expect, type Page } from '@playwright/test'
+import Logger from 'helpers/Logger.ts'
 
 export default class BasePage {
   protected readonly page: Page
@@ -9,6 +10,7 @@ export default class BasePage {
 
   public async openPage(link: string): Promise<void> {
     await this.page.goto(link)
+    Logger.info(`BasePage.openPage] Navigated to ${link}`)
   }
 
   public async validateCurrentUrl(url: string | RegExp): Promise<void> {

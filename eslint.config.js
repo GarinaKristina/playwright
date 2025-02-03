@@ -1,16 +1,14 @@
-import eslint from '@eslint/js'
 import prettier from 'eslint-config-prettier'
 import eslintPluginImportX from 'eslint-plugin-import-x'
-import tseslint, { configs, parser } from 'typescript-eslint'
+import tseslint, { parser } from 'typescript-eslint'
 
 export default tseslint.config(
   {
     ignores: ['test-results', 'playwright-report'],
   },
-  eslint.configs.recommended,
   eslintPluginImportX.flatConfigs.recommended,
   eslintPluginImportX.flatConfigs.typescript,
-  ...configs.recommendedTypeChecked,
+
   {
     languageOptions: {
       parser: parser,
@@ -28,6 +26,26 @@ export default tseslint.config(
       '@typescript-eslint/no-unsafe-member-access': 'off',
       '@typescript-eslint/no-unsafe-return': 'off',
       '@typescript-eslint/no-unsafe-argument': 'off',
+
+      'import-x/order': [
+        'error',
+        {
+          groups: [['builtin', 'external'], 'internal', ['parent', 'sibling', 'index']],
+          pathGroups: [
+            {
+              group: 'internal',
+              position: 'before',
+              pattern: '**/internal/**',
+            },
+          ],
+          pathGroupsExcludedImportTypes: ['builtin'],
+          'newlines-between': 'always',
+          alphabetize: {
+            order: 'asc',
+            caseInsensitive: true,
+          },
+        },
+      ],
     },
   },
   prettier

@@ -1,9 +1,11 @@
 import { test } from '@playwright/test'
-import { initializePages, inventoryPage, loginPage } from 'pages/index.ts'
+import { getLoginPage } from 'helpers/getLoginPage.ts'
+import { initializePages, inventoryPage } from 'pages/index.ts'
 
 test.describe('Inventory Filters', () => {
   test.beforeEach(async ({ page }) => {
     initializePages(page)
+    const loginPage = getLoginPage(page)
     await loginPage.openBaseWebSite()
     await loginPage.login()
     await inventoryPage.validateCurrentUrl(/inventory/)

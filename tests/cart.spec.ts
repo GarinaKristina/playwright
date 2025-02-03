@@ -1,12 +1,14 @@
 import { test } from '@playwright/test'
 import { INVENTORY } from 'constants/items.ts'
-import { cartPage, checkoutPage, initializePages, inventoryPage, loginPage } from 'pages/index.ts'
+import { getLoginPage } from 'helpers/getLoginPage.ts'
+import { cartPage, checkoutPage, initializePages, inventoryPage } from 'pages/index.ts'
 
 test.describe('Cart/ Basket', () => {
   const inventoryKeys = Object.keys(INVENTORY) as tInventoryItems[]
 
   test.beforeEach(async ({ page }) => {
     initializePages(page)
+    const loginPage = getLoginPage(page)
     await loginPage.openBaseWebSite()
     await loginPage.login()
     await inventoryPage.validateCurrentUrl(/inventory/)

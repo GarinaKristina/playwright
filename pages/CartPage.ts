@@ -1,6 +1,7 @@
 import { expect, Page } from '@playwright/test'
 import BasePage from './BasePage.ts'
 import { AbstractComponent } from 'components/index.ts'
+import Logger from 'helpers/Logger.ts'
 
 export default class CartPage extends BasePage {
   private container = new AbstractComponent(this.page, '.cart_item')
@@ -31,6 +32,7 @@ export default class CartPage extends BasePage {
         return (await item.locator('.inventory_item_name').innerText()).trim()
       })
     )
+    Logger.info(`CartPage.getItemNames] Item names: [${itemNames}]`)
     return itemNames
   }
 }

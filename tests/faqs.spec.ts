@@ -1,5 +1,6 @@
 import { test } from '@playwright/test'
-import { burgerMenuPage, initializePages, inventoryPage, loginPage, sauceLabsPage, sauceLabsFAQPage } from 'pages/index.ts'
+import { getLoginPage } from 'helpers/getLoginPage.ts'
+import { burgerMenuPage, initializePages, inventoryPage, sauceLabsPage, sauceLabsFAQPage } from 'pages/index.ts'
 
 test.describe('FAQ', () => {
   const faqItemsPlatformIntegrations: FAQItem[] = [
@@ -35,6 +36,7 @@ test.describe('FAQ', () => {
 
   test.beforeEach(async ({ page }) => {
     initializePages(page)
+    const loginPage = getLoginPage(page)
     await loginPage.openBaseWebSite()
     await loginPage.login()
     await inventoryPage.validateCurrentUrl(/inventory/)

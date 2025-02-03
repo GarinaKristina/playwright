@@ -1,5 +1,6 @@
 import { test } from '@playwright/test'
-import { burgerMenuPage, contactUsPage, initializePages, inventoryPage, loginPage, sauceLabsPage } from 'pages/index.ts'
+import { getLoginPage } from 'helpers/getLoginPage.ts'
+import { burgerMenuPage, contactUsPage, initializePages, inventoryPage, sauceLabsPage } from 'pages/index.ts'
 
 test.describe('Security', () => {
   const contextTexts = [
@@ -15,6 +16,7 @@ test.describe('Security', () => {
 
   test.beforeEach(async ({ page }) => {
     initializePages(page)
+    const loginPage = getLoginPage(page)
     await loginPage.openBaseWebSite()
     await loginPage.login()
     await inventoryPage.validateCurrentUrl(/inventory/)
