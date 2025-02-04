@@ -1,7 +1,8 @@
 import { Page } from '@playwright/test'
-import BasePage from './BasePage.ts'
 import { Button } from 'components/index.ts'
 import Logger from 'helpers/Logger.ts'
+
+import BasePage from './BasePage.ts'
 
 export default class BurgerMenuPage extends BasePage {
   private about = new Button(this.page, '#about_sidebar_link')

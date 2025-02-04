@@ -7,7 +7,7 @@
   "scripts": {
     "test-problem-user": "USER_TYPE=problem npx playwright test --headed  --project chromium",
     "test-locked-user": "USER_TYPE=locked-out npx playwright test --headed  --project chromium",
-    "test": "npx playwright test --headed  --project chromium",
+    "test": "npx playwright test --project chromium",
     "eslint": "eslint .",
     "prettier": "prettier . --write",
     "check-types": "tsc --noEmit"

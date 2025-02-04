@@ -1,7 +1,9 @@
-import { expect, Page } from '@playwright/test'
-import BasePage from './BasePage.ts'
-import { AbstractComponent, Button } from 'components/index.ts'
 import { azFilterOrder, zaFilterOrder, lowToHighFilterOrder, highToLowFilterOrder } from 'constants/filterOrder.ts'
+
+import { expect, Page } from '@playwright/test'
+import { AbstractComponent, Button } from 'components/index.ts'
+
+import BasePage from './BasePage.ts'
 
 export default class InventoryPage extends BasePage {
   private sauceLabsBackpack = new Button(this.page, '#add-to-cart-sauce-labs-backpack')
@@ -17,6 +19,7 @@ export default class InventoryPage extends BasePage {
 
   private inventoryItemCardPrice: (item: string) => AbstractComponent
   private inventoryItemCardDescription: (item: string) => AbstractComponent
+  private item: (itemName: string) => AbstractComponent
 
   constructor(page: Page) {
     super(page)
@@ -31,6 +34,7 @@ export default class InventoryPage extends BasePage {
         this.page,
         `//div[contains(text(),  "${item}")]/ancestor::div[@class="inventory_item"]//div[@class="inventory_item_desc"]`
       )
+    this.item = itemName => new AbstractComponent(this.page, `//div[normalize-space()='${itemName}']`)
   }
 
   public async openFilters() {
@@ -43,6 +47,10 @@ export default class InventoryPage extends BasePage {
 
   public async openCart() {
     await this.cart.click()
+  }
+
+  public async clickOnItemCard(itemName: tInventoryItems) {
+    await this.item(itemName).click()
   }
 
   public async addItemToCart(itemName: tInventoryItems) {

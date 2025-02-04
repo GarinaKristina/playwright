@@ -1,3 +1,4 @@
+/* eslint-disable import/order */
 import BaseComponent from './BaseComponent.ts'
 import { AbstractComponent } from './AbstractComponent.ts'
 import { Button } from './Button.ts'

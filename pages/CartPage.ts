@@ -1,12 +1,14 @@
 import { expect, Page } from '@playwright/test'
-import BasePage from './BasePage.ts'
-import { AbstractComponent } from 'components/index.ts'
+import { AbstractComponent, Button } from 'components/index.ts'
 import Logger from 'helpers/Logger.ts'
+
+import BasePage from './BasePage.ts'
 
 export default class CartPage extends BasePage {
   private container = new AbstractComponent(this.page, '.cart_item')
   private continueShopping = new AbstractComponent(this.page, '#continue-shopping')
   private checkout = new AbstractComponent(this.page, '#checkout')
+  private removeSauceLab = new Button(this.page, '#remove-sauce-labs-backpack')
 
   constructor(page: Page) {
     super(page)
@@ -18,6 +20,10 @@ export default class CartPage extends BasePage {
 
   public async goToCheckout() {
     await this.checkout.click()
+  }
+
+  public async remove() {
+    await this.removeSauceLab.click()
   }
 
   public async verifyItems(itemName: tInventoryItems) {

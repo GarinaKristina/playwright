@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { expect, Locator, Page } from '@playwright/test'
 
 export default abstract class BaseComponent {

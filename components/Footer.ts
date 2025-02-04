@@ -1,7 +1,6 @@
-import BasePage from 'pages/BasePage.ts'
-import Logger from 'helpers/Logger.ts'
-
 import { Page } from '@playwright/test'
+import Logger from 'helpers/Logger.ts'
+import BasePage from 'pages/BasePage.ts'
 
 import { BaseComponent, Button } from './index.ts'
 
@@ -26,7 +25,7 @@ export class Footer extends BaseComponent {
     } catch (e) {
       Logger.error(`Footer.selectFooterMenu] Menu item [${menuItem}] not visible, scrolling down. Error: ${e}`)
       await this.basePage.wheelMouse()
+      await this.selectFooterMenu(menuItem)
     }
-    await this.selectFooterMenu(menuItem)
   }
 }

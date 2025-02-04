@@ -1,8 +1,9 @@
 import { Page } from '@playwright/test'
-import BasePage from './BasePage.ts'
 import { Footer } from 'components/Footer.ts'
 import { AbstractComponent, Button } from 'components/index.ts'
 import Logger from 'helpers/Logger.ts'
+
+import BasePage from './BasePage.ts'
 
 export class SauceLabsPage extends BasePage {
   public footer = new Footer(this.page, 'footer-selector')

@@ -1,7 +1,8 @@
 import { Page } from '@playwright/test'
-import BasePage from './BasePage.ts'
 import { AbstractComponent, Button, Input } from 'components/index.ts'
 import UniqueData from 'helpers/UniqueData.ts'
+
+import BasePage from './BasePage.ts'
 
 type tPriceType = 'itemTotalPrice' | 'totalPrice' | 'tax'
 
@@ -10,10 +11,12 @@ export default class CartPage extends BasePage {
   private lastName = new Input(this.page, '#last-name')
   private postalCode = new Input(this.page, '#postal-code')
   private continue = new Button(this.page, '#continue')
+  private cancel = new Button(this.page, '#cancel')
   private itemTotalPrice = new AbstractComponent(this.page, '.summary_subtotal_label')
   private totalPrice = new AbstractComponent(this.page, '.summary_total_label')
   private tax = new AbstractComponent(this.page, '.summary_tax_label')
   private finish = new Button(this.page, '#finish')
+  private error = new AbstractComponent(this.page, '.error-message-container.error')
 
   //Complete
   private completeHeder = new AbstractComponent(this.page, '.complete-header')
@@ -38,6 +41,13 @@ export default class CartPage extends BasePage {
     await this.finish.click()
   }
 
+  public async clickCancel() {
+    await this.cancel.click()
+  }
+
+  public async goToInventoryPage() {
+    await this.backHome.click()
+  }
   public async verifyPrice(priceType: tPriceType, price: string) {
     const priceMap: { [key in tPriceType]: AbstractComponent } = {
       itemTotalPrice: this.itemTotalPrice,
@@ -55,7 +65,7 @@ export default class CartPage extends BasePage {
     await this.completeText.containText('Your order has been dispatched, and will arrive just as fast as the pony can get there!')
   }
 
-  public async goToInventoryPage() {
-    await this.backHome.click()
+  public async verifyErrorMessage() {
+    await this.error.isElementVisible()
   }
 }

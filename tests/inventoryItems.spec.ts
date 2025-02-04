@@ -1,7 +1,6 @@
 import { INVENTORY } from 'constants/items.ts'
 
 import { test } from '@playwright/test'
-
 import { getLoginPage } from 'helpers/getLoginPage.ts'
 import { initializePages, inventoryPage } from 'pages/index.ts'
 

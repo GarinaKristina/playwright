@@ -1,3 +1,4 @@
+/* eslint-disable import/order */
 import { Page } from '@playwright/test'
 import InventoryPage from './InventoryPage.ts'
 import { LockedOutUserLoginPage, ProblemUserLoginPage, StandardUserLoginPage } from './LoginPage.ts'
@@ -8,6 +9,7 @@ import CheckoutPage from './CheckoutPage.ts'
 import SauceLabsPage from './SauceLabsPage.ts'
 import SauceLabsFAQPage from './SauceLabsPage.ts'
 import ContactUsPage from './ContactUsPage.ts'
+import InventoryItemPage from './InventoryItemPage.ts'
 
 let standardUserLoginPage: StandardUserLoginPage
 let lockedOutUserLoginPage: LockedOutUserLoginPage
@@ -19,6 +21,7 @@ let sauceLabsPage: SauceLabsPage
 let sauceLabsFAQPage: SauceLabsFAQPage
 let contactUsPage: ContactUsPage
 let problemUserLoginPage: ProblemUserLoginPage
+let inventoryItemPage: InventoryItemPage
 
 export const initializePages = (page: Page) => {
   standardUserLoginPage = new StandardUserLoginPage(page)
@@ -31,6 +34,7 @@ export const initializePages = (page: Page) => {
   sauceLabsPage = new SauceLabsPage(page)
   sauceLabsFAQPage = new SauceLabsFAQPage(page)
   contactUsPage = new ContactUsPage(page)
+  inventoryItemPage = new InventoryItemPage(page)
 }
 
 export {
@@ -45,4 +49,5 @@ export {
   sauceLabsPage,
   sauceLabsFAQPage,
   contactUsPage,
+  inventoryItemPage,
 }

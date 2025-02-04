@@ -1,8 +1,10 @@
 import { Page } from '@playwright/test'
-import defineConfig from '../playwright.config.ts'
-import BasePage from './BasePage.ts'
-import { AbstractComponent, Button, Input } from '../components/index.ts'
 import Logger from 'helpers/Logger.ts'
+
+import { AbstractComponent, Button, Input } from '../components/index.ts'
+import defineConfig from '../playwright.config.ts'
+
+import BasePage from './BasePage.ts'
 
 abstract class LoginPage extends BasePage {
   protected logIn = new Button(this.page, '#login-button')

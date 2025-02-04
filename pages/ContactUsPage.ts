@@ -1,7 +1,8 @@
 import { Page } from '@playwright/test'
 
-import BasePage from './BasePage.ts'
 import { AbstractComponent, Button, Dropdown, Input } from '../components/index.ts'
+
+import BasePage from './BasePage.ts'
 
 export default class ContactUsPage extends BasePage {
   private email = new Input(this.page, '#Email')
