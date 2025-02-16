@@ -1,21 +1,21 @@
-import { Page } from '@playwright/test'
+import { Locator, Page } from '@playwright/test'
 
-import { AbstractComponent, Button, Dropdown, Input } from '../components/index.ts'
-
+// import { AbstractComponent, Button, Dropdown, Input } from '../components/index.ts'
+//
 import BasePage from './BasePage.ts'
 
 export default class ContactUsPage extends BasePage {
-  private email = new Input(this.page, '#Email')
-  private company = new Input(this.page, '#Company')
-  private comments = new Input(this.page, '#Sales_Contact_Comments__c')
-  private interest = new Dropdown(this.page, '#Solution_Interest__c')
-  private agreedPolicy = new Button(this.page, '#LblmktoCheckbox_44257_0')
+  private email: Locator = this.page.locator('#Email')
+  private company: Locator = this.page.locator('#Company')
+  private comments: Locator = this.page.locator('#Sales_Contact_Comments__c')
+  private interest: Locator = this.page.locator('#Solution_Interest__c')
+  private agreedPolicy: Locator = this.page.locator('#LblmktoCheckbox_44257_0')
 
-  private textContext: (value: string) => AbstractComponent
+  private textContext: (value: string) => Locator
 
   constructor(page: Page) {
     super(page)
-    this.textContext = value => new AbstractComponent(this.page, `//*[contains(text(),"${value}")]`)
+    this.textContext = value => this.page.locator(`//*[contains(text(),"${value}")]`)
   }
 
   public async fillContactDetails() {

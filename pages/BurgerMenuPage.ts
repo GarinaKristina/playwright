@@ -1,14 +1,14 @@
-import { Page } from '@playwright/test'
-import { Button } from 'components/index.ts'
+import { expect, Locator, Page } from '@playwright/test'
+// import { Button } from 'components/index.ts'
 import Logger from 'helpers/Logger.ts'
 
 import BasePage from './BasePage.ts'
 
 export default class BurgerMenuPage extends BasePage {
-  private about = new Button(this.page, '#about_sidebar_link')
-  private logout = new Button(this.page, '#logout_sidebar_link')
-  private resetAppState = new Button(this.page, '#reset_sidebar_link')
-  private allItems = new Button(this.page, '#inventory_sidebar_link')
+  private about: Locator = this.page.locator('#about_sidebar_link')
+  private logout: Locator = this.page.locator('#logout_sidebar_link')
+  private resetAppState: Locator = this.page.locator('#reset_sidebar_link')
+  private allItems: Locator = this.page.locator('#inventory_sidebar_link')
 
   constructor(page: Page) {
     super(page)
@@ -16,7 +16,7 @@ export default class BurgerMenuPage extends BasePage {
 
   public async open(menuItem: tBurgerMenuItems) {
     try {
-      const menuItemMap: { [key in tBurgerMenuItems]: Button } = {
+      const menuItemMap: { [key in tBurgerMenuItems]: Locator } = {
         About: this.about,
         Logout: this.logout,
         'Reset App State': this.resetAppState,
@@ -30,13 +30,13 @@ export default class BurgerMenuPage extends BasePage {
   }
 
   public async verifyMenuItemDisplayed(menuItem: tBurgerMenuItems) {
-    const menuItemMap: { [key in tBurgerMenuItems]: Button } = {
+    const menuItemMap: { [key in tBurgerMenuItems]: Locator } = {
       About: this.about,
       Logout: this.logout,
       'Reset App State': this.resetAppState,
       'All Items': this.allItems,
     }
-    await menuItemMap[menuItem].isElementVisible()
+    await expect(menuItemMap[menuItem]).toBeEnabled()
     Logger.info(`BurgerMenuPage.verifyMenuItemDisplayed] Burger menu [${menuItem}] displayed`)
   }
 }

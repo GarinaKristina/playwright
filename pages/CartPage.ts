@@ -1,14 +1,14 @@
-import { expect, Page } from '@playwright/test'
-import { AbstractComponent, Button } from 'components/index.ts'
+import { expect, Locator, Page } from '@playwright/test'
+// import { AbstractComponent, Button } from 'components/index.ts'
 import Logger from 'helpers/Logger.ts'
 
 import BasePage from './BasePage.ts'
 
 export default class CartPage extends BasePage {
-  private container = new AbstractComponent(this.page, '.cart_item')
-  private continueShopping = new AbstractComponent(this.page, '#continue-shopping')
-  private checkout = new AbstractComponent(this.page, '#checkout')
-  private removeSauceLab = new Button(this.page, '#remove-sauce-labs-backpack')
+  private container: Locator = this.page.locator('.cart_item')
+  private continueShopping: Locator = this.page.locator('#continue-shopping')
+  private checkout: Locator = this.page.locator('#checkout')
+  private removeSauceLab: Locator = this.page.locator('#remove-sauce-labs-backpack')
 
   constructor(page: Page) {
     super(page)

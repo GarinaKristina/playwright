@@ -1,16 +1,16 @@
-import { Page } from '@playwright/test'
+import { Locator, Page } from '@playwright/test'
 import Logger from 'helpers/Logger.ts'
 
-import { AbstractComponent, Button, Input } from '../components/index.ts'
+// import { AbstractComponent, Button, Input } from '../components/index.ts'
 import defineConfig from '../playwright.config.ts'
 
 import BasePage from './BasePage.ts'
 
 abstract class LoginPage extends BasePage {
-  protected logIn = new Button(this.page, '#login-button')
-  protected userName = new Input(this.page, '#user-name')
-  protected password = new Input(this.page, '#password')
-  protected errorContainer = new AbstractComponent(this.page, 'h3[data-test="error"]')
+  protected logIn: Locator = this.page.locator('#login-button')
+  protected userName: Locator = this.page.locator('#user-name')
+  protected password: Locator = this.page.locator('#password')
+  protected errorContainer: Locator = this.page.locator('h3[data-test="error"]')
 
   readonly baseURL = defineConfig.use!.baseURL as string
   readonly passwordData = 'secret_sauce'
@@ -61,7 +61,7 @@ export class ProblemUserLoginPage extends LoginPage {
   }
 
   protected async checkAuthentication() {
-    const errorMessage = await this.errorContainer.getAllTextContents()
+    const errorMessage = await this.errorContainer.allTextContents()
     Logger.http(`Problem user login error:', ${errorMessage}`)
   }
 }
@@ -77,7 +77,7 @@ export class LockedOutUserLoginPage extends LoginPage {
   }
 
   protected async checkAuthentication() {
-    const errorMessage = await this.errorContainer.getAllTextContents()
+    const errorMessage = await this.errorContainer.allTextContents()
     Logger.http(`Locked out user login error:', ${errorMessage}`)
   }
 }

@@ -1,5 +1,5 @@
-import { Page } from '@playwright/test'
-import { AbstractComponent, Button, Input } from 'components/index.ts'
+import { Locator, Page } from '@playwright/test'
+// import { AbstractComponent, Button, Input } from 'components/index.ts'
 import UniqueData from 'helpers/UniqueData.ts'
 
 import BasePage from './BasePage.ts'
@@ -7,21 +7,21 @@ import BasePage from './BasePage.ts'
 type tPriceType = 'itemTotalPrice' | 'totalPrice' | 'tax'
 
 export default class CartPage extends BasePage {
-  private firstName = new Input(this.page, '#first-name')
-  private lastName = new Input(this.page, '#last-name')
-  private postalCode = new Input(this.page, '#postal-code')
-  private continue = new Button(this.page, '#continue')
-  private cancel = new Button(this.page, '#cancel')
-  private itemTotalPrice = new AbstractComponent(this.page, '.summary_subtotal_label')
-  private totalPrice = new AbstractComponent(this.page, '.summary_total_label')
-  private tax = new AbstractComponent(this.page, '.summary_tax_label')
-  private finish = new Button(this.page, '#finish')
-  private error = new AbstractComponent(this.page, '.error-message-container.error')
+  private firstName: Locator = this.page.locator('#first-name')
+  private lastName: Locator = this.page.locator('#last-name')
+  private postalCode: Locator = this.page.locator('#postal-code')
+  private continue: Locator = this.page.locator('#continue')
+  private cancel: Locator = this.page.locator('#cancel')
+  private itemTotalPrice: Locator = this.page.locator('.summary_subtotal_label')
+  private totalPrice: Locator = this.page.locator('.summary_total_label')
+  private tax: Locator = this.page.locator('.summary_tax_label')
+  private finish: Locator = this.page.locator('#finish')
+  private error: Locator = this.page.locator('.error-message-container.error')
 
   //Complete
-  private completeHeder = new AbstractComponent(this.page, '.complete-header')
-  private completeText = new AbstractComponent(this.page, '.complete-text')
-  private backHome = new Button(this.page, '#back-to-products')
+  private completeHeder: Locator = this.page.locator('.complete-header')
+  private completeText: Locator = this.page.locator('.complete-text')
+  private backHome: Locator = this.page.locator('#back-to-products')
 
   constructor(page: Page) {
     super(page)
@@ -49,7 +49,7 @@ export default class CartPage extends BasePage {
     await this.backHome.click()
   }
   public async verifyPrice(priceType: tPriceType, price: string) {
-    const priceMap: { [key in tPriceType]: AbstractComponent } = {
+    const priceMap: { [key in tPriceType]: Locator } = {
       itemTotalPrice: this.itemTotalPrice,
       totalPrice: this.totalPrice,
       tax: this.tax,

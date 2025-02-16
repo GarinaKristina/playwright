@@ -30,7 +30,7 @@ export default class UniqueData {
    * UniqueData.randomNumber // 1562148912
    * @returns {string} A unique number
    */
-  public static get zipCode(): number {
-    return faker.number.int({ min: 1000, max: 5000 })
+  public static get zipCode(): string {
+    return String(faker.number.int({ min: 1000, max: 5000 }))
   }
 }

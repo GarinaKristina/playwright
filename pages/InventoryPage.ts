@@ -1,40 +1,33 @@
 import { azFilterOrder, zaFilterOrder, lowToHighFilterOrder, highToLowFilterOrder } from 'constants/filterOrder.ts'
 
-import { expect, Page } from '@playwright/test'
-import { AbstractComponent, Button } from 'components/index.ts'
+import { expect, Locator, Page } from '@playwright/test'
 
 import BasePage from './BasePage.ts'
 
 export default class InventoryPage extends BasePage {
-  private sauceLabsBackpack = new Button(this.page, '#add-to-cart-sauce-labs-backpack')
-  private sauceLabsBikeLight = new Button(this.page, '#add-to-cart-sauce-labs-bike-light')
-  private sauceLabsBoltTShirt = new Button(this.page, '#add-to-cart-sauce-labs-bolt-t-shirt')
-  private sauceLabsFleeceJacket = new Button(this.page, '#add-to-cart-sauce-labs-fleece-jacket')
-  private sauceLabsOnesie = new Button(this.page, '#add-to-cart-sauce-labs-onesie')
-  private testAllTheThingsTShirtRed = new Button(this.page, 'button[id="add-to-cart-test.allthethings()-t-shirt-(red)"]')
-  private cart = new Button(this.page, '#shopping_cart_container')
-  private filters = new Button(this.page, '.product_sort_container')
-  private container = new AbstractComponent(this.page, '.inventory_item')
-  private burgerMenu = new Button(this.page, '#react-burger-menu-btn')
+  private sauceLabsBackpack: Locator = this.page.locator('#add-to-cart-sauce-labs-backpack')
+  private sauceLabsBikeLight: Locator = this.page.locator('#add-to-cart-sauce-labs-bike-light')
+  private sauceLabsBoltTShirt: Locator = this.page.locator('#add-to-cart-sauce-labs-bolt-t-shirt')
+  private sauceLabsFleeceJacket: Locator = this.page.locator('#add-to-cart-sauce-labs-fleece-jacket')
+  private sauceLabsOnesie: Locator = this.page.locator('#add-to-cart-sauce-labs-onesie')
+  private testAllTheThingsTShirtRed: Locator = this.page.locator('button[id="add-to-cart-test.allthethings()-t-shirt-(red)"]')
+  private cart: Locator = this.page.locator('#shopping_cart_container')
+  private filters: Locator = this.page.locator('.product_sort_container')
+  private container: Locator = this.page.locator('.inventory_item')
+  private burgerMenu: Locator = this.page.locator('#react-burger-menu-btn')
 
-  private inventoryItemCardPrice: (item: string) => AbstractComponent
-  private inventoryItemCardDescription: (item: string) => AbstractComponent
-  private item: (itemName: string) => AbstractComponent
+  private inventoryItemCardPrice: (item: string) => Locator
+  private inventoryItemCardDescription: (item: string) => Locator
+  private item: (itemName: string) => Locator
 
   constructor(page: Page) {
     super(page)
 
     this.inventoryItemCardPrice = item =>
-      new AbstractComponent(
-        this.page,
-        `//div[contains(text(),  "${item}")]/ancestor::div[@class="inventory_item"]//div[@class="inventory_item_price"]`
-      )
+      this.page.locator(`//div[contains(text(),  "${item}")]/ancestor::div[@class="inventory_item"]//div[@class="inventory_item_price"]`)
     this.inventoryItemCardDescription = item =>
-      new AbstractComponent(
-        this.page,
-        `//div[contains(text(),  "${item}")]/ancestor::div[@class="inventory_item"]//div[@class="inventory_item_desc"]`
-      )
-    this.item = itemName => new AbstractComponent(this.page, `//div[normalize-space()='${itemName}']`)
+      this.page.locator(`//div[contains(text(),  "${item}")]/ancestor::div[@class="inventory_item"]//div[@class="inventory_item_desc"]`)
+    this.item = itemName => this.page.locator(`//div[normalize-space()='${itemName}']`)
   }
 
   public async openFilters() {
@@ -54,7 +47,7 @@ export default class InventoryPage extends BasePage {
   }
 
   public async addItemToCart(itemName: tInventoryItems) {
-    const cartItemMap: { [itemName: string]: Button } = {
+    const cartItemMap: { [itemName: string]: Locator } = {
       'Sauce Labs Backpack': this.sauceLabsBackpack,
       'Sauce Labs Bike Light': this.sauceLabsBikeLight,
       'Sauce Labs Bolt T-Shirt': this.sauceLabsBoltTShirt,
@@ -82,23 +75,23 @@ export default class InventoryPage extends BasePage {
   }
 
   public async verifyFilters(filterName: tFilters) {
-    await this.filters.containText(filterName)
+    await expect(this.filters).toContainText(filterName)
   }
 
   public async verifyItemOnPage(itemName: tInventoryItems) {
-    await this.inventoryItemCardPrice(itemName).isElementVisible()
+    await expect(this.inventoryItemCardPrice(itemName)).toBeEnabled()
   }
 
   public async assertCartHaveItem(itemCount: string) {
-    await this.cart.haveText(itemCount)
+    await expect(this.cart).toHaveText(itemCount)
   }
 
   public async assertItemHasPrice(itemName: tInventoryItems, price: string) {
-    await this.inventoryItemCardPrice(itemName).haveText(price)
+    await expect(this.inventoryItemCardPrice(itemName)).toHaveText(price)
   }
 
   public async assertItemHasDescription(itemName: tInventoryItems, description: string) {
-    await this.inventoryItemCardDescription(itemName).haveText(description)
+    await expect(this.inventoryItemCardDescription(itemName)).toHaveText(description)
   }
 
   private async getItemNames(): Promise<string[]> {
