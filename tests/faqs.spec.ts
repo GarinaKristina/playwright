@@ -42,7 +42,7 @@ test.describe('FAQ', () => {
     await inventoryPage.validateCurrentUrl(/inventory/)
     await inventoryPage.openBurgerMenu()
     await burgerMenuPage.open('About')
-    await sauceLabsPage.selectFooterMenu('faqs')
+    await sauceLabsPage.footer.selectFooterMenu('faqs')
   })
 
   test(`Verify platform integrations on Sauce Labs FAQs Page`, async () => {
