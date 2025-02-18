@@ -1,11 +1,14 @@
 import { expect, type Page } from '@playwright/test'
+import { Footer } from 'components/index.ts'
 import Logger from 'helpers/Logger.ts'
 
 export default class BasePage {
   protected page: Page
+  public footer: Footer
 
   public constructor(page: Page) {
     this.page = page
+    this.footer = new Footer(page)
   }
 
   public async openPage(link: string): Promise<void> {

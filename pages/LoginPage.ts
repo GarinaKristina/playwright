@@ -1,7 +1,6 @@
 import { Locator, Page } from '@playwright/test'
 import Logger from 'helpers/Logger.ts'
 
-// import { AbstractComponent, Button, Input } from '../components/index.ts'
 import defineConfig from '../playwright.config.ts'
 
 import BasePage from './BasePage.ts'

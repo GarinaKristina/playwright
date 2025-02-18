@@ -1,5 +1,4 @@
 import { expect, Locator, Page } from '@playwright/test'
-// import { Button } from 'components/index.ts'
 import Logger from 'helpers/Logger.ts'
 
 import BasePage from './BasePage.ts'

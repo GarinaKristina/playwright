@@ -1,5 +1,4 @@
-import { Locator, Page } from '@playwright/test'
-// import { AbstractComponent, Button, Input } from 'components/index.ts'
+import { expect, Locator, Page } from '@playwright/test'
 import UniqueData from 'helpers/UniqueData.ts'
 
 import BasePage from './BasePage.ts'
@@ -54,18 +53,18 @@ export default class CartPage extends BasePage {
       totalPrice: this.totalPrice,
       tax: this.tax,
     }
-    await priceMap[priceType].containText(price)
+    await expect(priceMap[priceType]).toContainText(price)
   }
 
   public async verifyCompleteHeader() {
-    await this.completeHeder.containText('Thank you for your order!')
+    await expect(this.completeHeder).toContainText('Thank you for your order!')
   }
 
   public async verifyCompleteText() {
-    await this.completeText.containText('Your order has been dispatched, and will arrive just as fast as the pony can get there!')
+    await expect(this.completeText).toContainText('Your order has been dispatched, and will arrive just as fast as the pony can get there!')
   }
 
   public async verifyErrorMessage() {
-    await this.error.isElementVisible()
+    await expect(this.error).toBeEnabled()
   }
 }

@@ -1,9 +1,9 @@
-import { Page } from '@playwright/test'
+// import { Page } from '@playwright/test'
 
-import { BaseComponent } from './index.ts'
+// import { BaseComponent } from './index.ts'
 
-export class AbstractComponent extends BaseComponent {
-  constructor(page: Page) {
-    super(page)
-  }
-}
+// export class AbstractComponent extends BaseComponent {
+//   constructor(page: Page) {
+//     super(page)
+//   }
+// }

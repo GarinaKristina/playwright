@@ -1,7 +1,5 @@
-import { Locator, Page } from '@playwright/test'
+import { expect, Locator, Page } from '@playwright/test'
 
-// import { AbstractComponent, Button, Dropdown, Input } from '../components/index.ts'
-//
 import BasePage from './BasePage.ts'
 
 export default class ContactUsPage extends BasePage {
@@ -22,7 +20,7 @@ export default class ContactUsPage extends BasePage {
     await this.email.fill('standard_user')
     await this.company.fill('secret_sauce')
     await this.comments.fill('I am interested in your product')
-    await this.interest.setSelectOption('Debugging')
+    await this.interest.selectOption('Debugging')
   }
 
   public async getDemo() {
@@ -30,6 +28,6 @@ export default class ContactUsPage extends BasePage {
   }
 
   public async verifyContext(value: string) {
-    await this.textContext(value).isElementVisible()
+    await expect(this.textContext(value)).toBeEnabled()
   }
 }
