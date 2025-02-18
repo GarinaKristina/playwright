@@ -14,7 +14,7 @@ test.describe('Security', () => {
   test('Verify security page contain needed blocks', async () => {
     await inventoryPage.openBurgerMenu()
     await burgerMenuPage.open('About')
-    await sauceLabsPage.footer.selectFooterMenu('security')
+    await sauceLabsPage.searchSecurityItem()
     await sauceLabsPage.verifySecurityCertifications()
     await sauceLabsPage.verifyMenuSecurityBlockVisible('Sauce Labs makes software work for everyone, when they want it, everytime.')
     await sauceLabsPage.verifyMenuSecurityBlockVisible('Security Details')

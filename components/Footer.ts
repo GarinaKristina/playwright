@@ -20,13 +20,15 @@ export class Footer extends BaseComponent {
   }
 
   public async selectFooterMenu(menuItem: tFooterItems): Promise<void> {
-    try {
-      await expect(this[menuItem]).toBeEnabled()
-      await this[menuItem].click()
-    } catch (e) {
-      Logger.error(`Footer.selectFooterMenu] Menu item [${menuItem}] not visible, scrolling down. Error: ${e}`)
-      await this.wheelMouse()
-      await this.selectFooterMenu(menuItem)
+    for (let attempt = 1; attempt <= 10; attempt++) {
+      try {
+        await expect(this[menuItem]).toBeEnabled()
+        await this[menuItem].click()
+      } catch (e) {
+        Logger.error(`Footer.selectFooterMenu] Menu item [${menuItem}] not visible, scrolling down. Error: ${e}`)
+        await this.wheelMouse()
+      }
     }
+    Logger.error(`Footer.selectFooterMenu] Menu item [${menuItem}] not visible after 10 attempts`)
   }
 }

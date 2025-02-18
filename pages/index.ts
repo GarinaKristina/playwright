@@ -6,10 +6,11 @@ import BasePage from './BasePage.ts'
 import BurgerMenuPage from './BurgerMenuPage.ts'
 import CartPage from './CartPage.ts'
 import CheckoutPage from './CheckoutPage.ts'
-import SauceLabsPage from './SauceLabsPage.ts'
-import SauceLabsFAQPage from './SauceLabsPage.ts'
 import ContactUsPage from './ContactUsPage.ts'
 import InventoryItemPage from './InventoryItemPage.ts'
+import { EnabledVerificationStrategy, VisibleVerificationStrategy } from './VerificationStrategies.ts'
+import SauceLabsFAQPage from './SauceLabsPage.ts'
+import SauceLabsPage from './SauceLabsPage.ts'
 
 let standardUserLoginPage: StandardUserLoginPage
 let lockedOutUserLoginPage: LockedOutUserLoginPage
@@ -22,8 +23,12 @@ let sauceLabsFAQPage: SauceLabsFAQPage
 let contactUsPage: ContactUsPage
 let problemUserLoginPage: ProblemUserLoginPage
 let inventoryItemPage: InventoryItemPage
+let enabledVerificationStrategy: EnabledVerificationStrategy
+let visibleVerificationStrategy: VisibleVerificationStrategy
 
 export const initializePages = (page: Page) => {
+  enabledVerificationStrategy = new EnabledVerificationStrategy()
+  visibleVerificationStrategy = new VisibleVerificationStrategy()
   standardUserLoginPage = new StandardUserLoginPage(page)
   lockedOutUserLoginPage = new LockedOutUserLoginPage(page)
   problemUserLoginPage = new ProblemUserLoginPage(page)
@@ -31,8 +36,8 @@ export const initializePages = (page: Page) => {
   burgerMenuPage = new BurgerMenuPage(page)
   cartPage = new CartPage(page)
   checkoutPage = new CheckoutPage(page)
-  sauceLabsPage = new SauceLabsPage(page)
-  sauceLabsFAQPage = new SauceLabsFAQPage(page)
+  sauceLabsPage = new SauceLabsPage(page, enabledVerificationStrategy)
+  sauceLabsFAQPage = new SauceLabsFAQPage(page, visibleVerificationStrategy)
   contactUsPage = new ContactUsPage(page)
   inventoryItemPage = new InventoryItemPage(page)
 }

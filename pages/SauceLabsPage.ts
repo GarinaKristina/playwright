@@ -1,37 +1,47 @@
-import { expect, Locator, Page } from '@playwright/test'
-// import { Footer } from 'components/Footer.ts'
+import { Page, Locator } from '@playwright/test'
 import Logger from 'helpers/Logger.ts'
 
 import BasePage from './BasePage.ts'
+import { IVerificationStrategy, EnabledVerificationStrategy } from './VerificationStrategies.ts'
 
 export class SauceLabsPage extends BasePage {
-  // public footer: Locator = this.page.locator('footer-selector')
+  private search: Locator = this.page.locator('//button[@type="button"]//div[@class="MuiBox-root css-vxcmzt"]')
+  private searchInput: Locator = this.page.locator('//input[@id="search"]')
+  private securityItem: Locator = this.page.locator('//span[contains(text(),"Learn more about our company")]')
   private securityCertifications: Locator = this.page.locator('//h2[normalize-space()="Security & Certifications"]')
-
   private securityMenuBlock: (menuBlock: string) => Locator
-  constructor(page: Page) {
-    super(page)
 
+  protected verificationStrategy: IVerificationStrategy
+
+  constructor(page: Page, verificationStrategy: IVerificationStrategy = new EnabledVerificationStrategy()) {
+    super(page)
     this.securityMenuBlock = menuBlock => this.page.locator(`//*[contains(text(), '${menuBlock}')]`)
+    this.verificationStrategy = verificationStrategy
   }
 
+  public async searchSecurityItem(): Promise<void> {
+    await this.search.click()
+    await this.searchInput.fill('Security')
+    await this.searchInput.press('Enter')
+    await this.securityItem.click()
+  }
   public async verifySecurityCertifications(): Promise<void> {
-    await expect(this.securityCertifications).toBeEnabled()
+    await this.verificationStrategy.verify(this.securityCertifications)
   }
 
   public async verifyMenuSecurityBlockVisible(menuBlock: string): Promise<void> {
-    try {
-      await expect(this.securityMenuBlock(menuBlock)).toBeEnabled()
-    } catch (e) {
-      Logger.error(`SauceLabsPage.verifyMenuSecurityBlockVisible] Menu block [${menuBlock}] not visible, scrolling down. Error: ${e}`)
-      await this.footer.wheelMouse()
-      await this.verifyMenuSecurityBlockVisible(menuBlock)
+    for (let attempt = 1; attempt <= 10; attempt++) {
+      try {
+        await this.verificationStrategy.verify(this.securityMenuBlock(menuBlock))
+      } catch (e) {
+        Logger.error(`SauceLabsPage.verifyMenuSecurityBlockVisible] Menu block [${menuBlock}] not visible, scrolling down. Error: ${e}`)
+        await this.footer.wheelMouse()
+      }
     }
   }
 }
 
 export default class SauceLabsFAQPage extends SauceLabsPage {
-  // public footerComponent: Footer
   private platformIntegrations: Locator = this.page.locator('//span[normalize-space()="Platform & Integrations"]')
   private mobileAppTesting: Locator = this.page.locator('//span[normalize-space()="Mobile App Testing"]')
   private apiTesting: Locator = this.page.locator('//span[normalize-space()="API testing"]')
@@ -41,15 +51,15 @@ export default class SauceLabsFAQPage extends SauceLabsPage {
   private platformIntegrationsItems: (menuItem: string) => Locator
   private platformIntegrationsItemsDescription: (menuItem: string) => Locator
 
-  constructor(page: Page) {
-    super(page)
-    // this.footerComponent = new Footer(page)
+  constructor(page: Page, verificationStrategy: IVerificationStrategy = new EnabledVerificationStrategy()) {
+    super(page, verificationStrategy)
+
     this.platformIntegrationsItems = menuItem => this.page.locator(`//*[contains(text(), '${menuItem}')]`)
     this.platformIntegrationsItemsDescription = menuItem => this.page.locator(`//p[contains(., '${menuItem}')]`)
   }
 
-  public async selectFAQTab(menuItem: tSauceLabsFAQItems): Promise<void> {
-    const menuItemMap: { [key in tSauceLabsFAQItems]: Locator } = {
+  public async selectFAQTab(menuItem: string): Promise<void> {
+    const menuItemMap: { [key: string]: Locator } = {
       'Platform & Integrations': this.platformIntegrations,
       'Mobile App Testing': this.mobileAppTesting,
       'API testing': this.apiTesting,
@@ -64,6 +74,6 @@ export default class SauceLabsFAQPage extends SauceLabsPage {
   }
 
   public async verifyFAQItemDescription(menuItem: string): Promise<void> {
-    await expect(this.platformIntegrationsItemsDescription(menuItem)).toBeEnabled()
+    await this.verificationStrategy.verify(this.platformIntegrationsItemsDescription(menuItem))
   }
 }
