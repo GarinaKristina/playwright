@@ -1,11 +1,14 @@
 import { expect, type Page } from '@playwright/test'
+import { Footer } from 'components/index.ts'
 import Logger from 'helpers/Logger.ts'
 
 export default class BasePage {
-  protected readonly page: Page
+  protected page: Page
+  public footer: Footer
 
-  constructor(page: Page) {
+  public constructor(page: Page) {
     this.page = page
+    this.footer = new Footer(page)
   }
 
   public async openPage(link: string): Promise<void> {
@@ -15,9 +18,5 @@ export default class BasePage {
 
   public async validateCurrentUrl(url: string | RegExp): Promise<void> {
     await expect(this.page).toHaveURL(url)
-  }
-
-  public async wheelMouse(x: number = 0, y: number = 1000): Promise<void> {
-    await this.page.mouse.wheel(x, y)
   }
 }

@@ -6,9 +6,9 @@ This project is an automated testing framework for 'https://www.saucedemo.com/'
 
 - **Playwright** - End-to-End testing framework.
 - **TypeScript**
-- **Page Object Component**
-- **Dependency Injection (DI)** - Manages dependencies without hardcoding them.
-- **Template Method** - An abstract base class for different login scenarios.
+- **Page Object Model**
+- **Strategy**
+- **Template Method**
 - **Decorator**
 
 ---
