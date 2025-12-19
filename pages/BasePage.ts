@@ -1,4 +1,4 @@
-import { expect, type Page } from '@playwright/test'
+import { expect,  type Page } from '@playwright/test'
 import { Footer } from 'components/index.ts'
 import Logger from 'helpers/Logger.ts'
 

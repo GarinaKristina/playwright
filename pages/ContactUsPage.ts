@@ -3,7 +3,7 @@ import { expect, type Locator, type Page } from '@playwright/test'
 import BasePage from './BasePage.ts'
 
 export default class ContactUsPage extends BasePage {
-  private email: Locator = this.page.locator('#Email')
+  private email: Locator = this.page.locator('#Email').nth(0)
   private company: Locator = this.page.locator('#Company')
   private comments: Locator = this.page.locator('#Sales_Contact_Comments__c')
   private interest: Locator = this.page.locator('#Solution_Interest__c')
@@ -13,7 +13,7 @@ export default class ContactUsPage extends BasePage {
 
   constructor(page: Page) {
     super(page)
-    this.textContext = value => this.page.locator(`//*[contains(text(),"${value}")]`)
+    this.textContext = value => this.page.locator(`//*[contains(text(),"${value}")]`).first()
   }
 
   public async fillContactDetails() {
