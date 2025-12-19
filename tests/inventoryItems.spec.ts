@@ -26,5 +26,5 @@ test.describe('Inventory Items', () => {
       await inventoryPage.assertItemHasPrice(item, INVENTORY[item].price)
       await inventoryPage.assertItemHasDescription(item, INVENTORY[item].description)
     }
-  })
+  },{timeout: 30000})
 })

@@ -1,15 +1,13 @@
-import { test } from '@playwright/test'
-import { getLoginPage } from 'helpers/getLoginPage.ts'
 import { burgerMenuPage, initializePages, inventoryPage } from 'pages/index.ts'
+
+import { test } from './fixtures/testFixtures.ts'
 
 test.describe('Burger Menu', () => {
   const burgerMenuItems: tBurgerMenuItems[] = ['All Items', 'About', 'Logout', 'Reset App State']
 
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async ({ page, login }) => {
     initializePages(page)
-    const loginPage = getLoginPage(page)
-    await loginPage.openBaseWebSite()
-    await loginPage.login()
+    await login()
     await inventoryPage.validateCurrentUrl(/inventory/)
     await inventoryPage.openBurgerMenu()
   })

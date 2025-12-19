@@ -1,4 +1,4 @@
-import { Locator, Page } from '@playwright/test'
+import type { Locator, Page } from '@playwright/test'
 import Logger from 'helpers/Logger.ts'
 
 import defineConfig from '../playwright.config.ts'

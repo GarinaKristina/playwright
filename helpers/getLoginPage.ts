@@ -1,4 +1,4 @@
-import { Page } from '@playwright/test'
+import type { Page } from '@playwright/test'
 import { LockedOutUserLoginPage, ProblemUserLoginPage, StandardUserLoginPage } from 'pages/LoginPage.ts'
 
 export const getLoginPage = (page: Page) => {
