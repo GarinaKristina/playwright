@@ -1,8 +1,8 @@
-import { Page, Locator } from '@playwright/test'
+import type { Page, Locator } from '@playwright/test'
 import Logger from 'helpers/Logger.ts'
 
 import BasePage from './BasePage.ts'
-import { IVerificationStrategy, EnabledVerificationStrategy } from './VerificationStrategies.ts'
+import { EnabledVerificationStrategy, type IVerificationStrategy } from './VerificationStrategies.ts'
 
 export class SauceLabsPage extends BasePage {
   private search: Locator = this.page.locator('//button[@type="button"]//div[@class="MuiBox-root css-vxcmzt"]')

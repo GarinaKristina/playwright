@@ -1,4 +1,4 @@
-import { expect, Locator } from '@playwright/test'
+import { expect, type Locator } from '@playwright/test'
 
 export interface IVerificationStrategy {
   verify(locator: Locator): Promise<void>

@@ -9,11 +9,13 @@ export default defineConfig({
 
   outputDir: '.artifacts/test-results',
 
-  reporter: [['html', { outputFolder: '.artifacts//html-report' }]],
+  reporter: [['html', { outputFolder: '.artifacts/html-report' }]],
 
   use: {
     baseURL: 'https://www.saucedemo.com/',
-    trace: 'on-first-retry',
+    trace: 'retain-on-failure',
+    screenshot: 'only-on-failure',
+    video: 'retain-on-failure',
   },
 
   projects: [

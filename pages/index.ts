@@ -1,16 +1,16 @@
-/* eslint-disable import/order */
-import { Page } from '@playwright/test'
-import InventoryPage from './InventoryPage.ts'
-import { LockedOutUserLoginPage, ProblemUserLoginPage, StandardUserLoginPage } from './LoginPage.ts'
+import type { Page } from '@playwright/test'
+
 import BasePage from './BasePage.ts'
 import BurgerMenuPage from './BurgerMenuPage.ts'
 import CartPage from './CartPage.ts'
 import CheckoutPage from './CheckoutPage.ts'
 import ContactUsPage from './ContactUsPage.ts'
 import InventoryItemPage from './InventoryItemPage.ts'
-import { EnabledVerificationStrategy, VisibleVerificationStrategy } from './VerificationStrategies.ts'
+import InventoryPage from './InventoryPage.ts'
+import { LockedOutUserLoginPage, ProblemUserLoginPage, StandardUserLoginPage } from './LoginPage.ts'
 import SauceLabsFAQPage from './SauceLabsPage.ts'
 import SauceLabsPage from './SauceLabsPage.ts'
+import { EnabledVerificationStrategy, VisibleVerificationStrategy } from './VerificationStrategies.ts'
 
 let standardUserLoginPage: StandardUserLoginPage
 let lockedOutUserLoginPage: LockedOutUserLoginPage
@@ -25,6 +25,7 @@ let problemUserLoginPage: ProblemUserLoginPage
 let inventoryItemPage: InventoryItemPage
 let enabledVerificationStrategy: EnabledVerificationStrategy
 let visibleVerificationStrategy: VisibleVerificationStrategy
+
 
 export const initializePages = (page: Page) => {
   enabledVerificationStrategy = new EnabledVerificationStrategy()

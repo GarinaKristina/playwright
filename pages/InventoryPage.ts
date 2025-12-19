@@ -1,6 +1,6 @@
 import { azFilterOrder, zaFilterOrder, lowToHighFilterOrder, highToLowFilterOrder } from 'constants/filterOrder.ts'
 
-import { expect, Locator, Page } from '@playwright/test'
+import { expect, type Locator, type Page } from '@playwright/test'
 
 import BasePage from './BasePage.ts'
 

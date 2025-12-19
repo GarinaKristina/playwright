@@ -1,4 +1,4 @@
-import { Locator, Page } from '@playwright/test'
+import type { Locator, Page } from '@playwright/test'
 import Logger from 'helpers/Logger.ts'
 
 import defineConfig from '../playwright.config.ts'
@@ -40,11 +40,13 @@ export class StandardUserLoginPage extends LoginPage {
   }
 
   protected async submitLogin() {
+    await this.page.addLocatorHandler(this.page.getByRole('button', { name: 'accept' }), clickedElement => clickedElement.click(), { times: 1 })
     await this.logIn.click()
   }
 
   protected async checkAuthentication() {
     await this.page.waitForURL('https://www.saucedemo.com/inventory.html')
+     await this.page.waitForLoadState('domcontentloaded')
     Logger.http('Standard user login successful')
   }
 }
